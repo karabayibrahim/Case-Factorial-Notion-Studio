@@ -1,0 +1,11 @@
+public override void Transtiton<T>(MYSTATUS mySt)
+    {
+        Component c = gameObject.GetComponent<IStrategey>() as Component;
+        if (c != null)
+        {
+            Destroy(c);
+        }
+        myStrategey = gameObject.AddComponent(typeof(T)) as IStrategey;
+        myStrategey.DoStrategey();
+        mySTATUS = mySt;
+    }
