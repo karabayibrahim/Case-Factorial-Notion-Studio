@@ -8,7 +8,7 @@ public class FallBehaviour : MonoBehaviour,IStrategy
     {
         Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0);
         ObjectPool.Instance.targetcam.SetActive(true);
-        Physics.gravity = new Vector3(0, -20f, 0);
+        Physics.gravity = new Vector3(0, -30f, 0);
         gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
 

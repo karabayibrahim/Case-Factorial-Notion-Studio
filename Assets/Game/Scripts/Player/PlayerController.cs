@@ -37,6 +37,13 @@ public class PlayerController : MonoSingleton<PlayerController>
     {
         Transtiton<FlyBehaviour>(MYSTATUS.FLY);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<ICollectable>()!=null)
+        {
+            collision.gameObject.GetComponent<ICollectable>().DoCollect();
+        }
+    }
     public void Transtiton<T>(MYSTATUS mySt)
     {
         Component c = gameObject.GetComponent<IStrategy>() as Component;

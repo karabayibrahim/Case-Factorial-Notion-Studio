@@ -10,13 +10,16 @@ public class FlyBehaviour : MonoBehaviour, IStrategy
     private float _lastFrameFingerPositionX;
     private float _moveFactorX;
     float swerveAmount;
+    Vector3 v3;
     public float MoveFactorX => _moveFactorX;
     public void DoStrategy()
     {
+        gameObject.transform.eulerAngles = new Vector3(90, 90, 90);
+
         anim = PlayerController.Instance.gameObject.transform.GetChild(0).transform.gameObject.GetComponent<Animator>();
         anim.SetTrigger("Fly");
-        gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x, gameObject.GetComponent<Rigidbody>().velocity.y-20, gameObject.GetComponent<Rigidbody>().velocity.z - 20f);
-        Physics.gravity = new Vector3(0, -5f, 0);
+        gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x, gameObject.GetComponent<Rigidbody>().velocity.y*0.5f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.5f);
+        Physics.gravity = new Vector3(0, -2f, 0);
 
         //Camera.main.gameObject.GetComponent<CamFollow>().enabled = true;
     }
@@ -24,7 +27,6 @@ public class FlyBehaviour : MonoBehaviour, IStrategy
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.eulerAngles = new Vector3(90, 90, 90);
         swerveAmount = 0;
 
     }
@@ -47,11 +49,13 @@ public class FlyBehaviour : MonoBehaviour, IStrategy
     }
     void ControllerMove()
     {
-        if (swerveAmount!=0&&swerveAmount<1f)
+        if (swerveAmount != 0 && swerveAmount < 1f)
         {
-            
+            //v3 = new Vector3(PlayerController.Instance.transform.localRotation.eulerAngles.x + (swerveAmount * 5f), 90f, 90f);
             PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.x + (swerveAmount * 10f), PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.y - 0.01f, PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.z);
-            gameObject.transform.eulerAngles = new Vector3(PlayerController.Instance.transform.eulerAngles.x + (swerveAmount*5f), 90f, 90f);
+            //gameObject.transform.eulerAngles = v3;
+            var rotation = Quaternion.Euler(transform.eulerAngles.x+(swerveAmount*2000f), 90, 90);
+            gameObject.transform.localRotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime*2f);
 
 
         }
