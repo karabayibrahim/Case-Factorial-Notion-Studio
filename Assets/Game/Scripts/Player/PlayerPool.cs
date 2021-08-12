@@ -11,12 +11,12 @@ public class PlayerPool : MonoSingleton<PlayerPool>
     {
         foreach (var item in PlayerController.Instance.gameObject.GetComponentsInChildren<Transform>())
         {
-            if (item.name== "ArmaturePlayer")
+            if (item.name== "Rocketman_Animated")
             {
                 mainPlayer = item.gameObject;
             }
         }
-        stick = PlayerController.Instance.gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+        stick = PlayerController.Instance.gameObject.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
