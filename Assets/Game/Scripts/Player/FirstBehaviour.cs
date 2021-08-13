@@ -39,7 +39,7 @@ public class FirstBehaviour : MonoBehaviour, IStrategy
         Destroy(PlayerPool.Instance.stick);
         PlayerController.Instance.transform.localRotation = Quaternion.Euler(90, 0, 0);
         float amount = 1080 - Input.mousePosition.x;
-        amount /= 500f;
+        amount /= 400f;
         rb.velocity = new Vector3(0, amount, amount) * 20f;
     }
     void Controller()
@@ -50,8 +50,8 @@ public class FirstBehaviour : MonoBehaviour, IStrategy
         if (Input.GetMouseButton(0))
         {
 
-            
 
+            ObjectPool.Instance.startClose.SetActive(false);
 
 
             if (Input.mousePosition.x < 1080 / 4f && Input.mousePosition.x >= 0)

@@ -13,8 +13,14 @@ public class MonoSingleton<T> : MonoBehaviour where T:MonoSingleton<T>
             if (_instance==null)
             {
                 _instance = FindObjectOfType(typeof(T)) as T;
+                
             }
+           
             return _instance;
+
+
+
         }
+
     }
 }
