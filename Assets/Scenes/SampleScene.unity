@@ -170,9 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 0, z: -15}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 0.5
+  m_YDamping: 0.5
+  m_ZDamping: 0.5
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1071,6 +1071,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea49a1421e73ae45b33c9d966edab96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTempZ: 0
+  cubeList: []
+  cylinderList: []
 --- !u!4 &1532548000
 Transform:
   m_ObjectHideFlags: 0

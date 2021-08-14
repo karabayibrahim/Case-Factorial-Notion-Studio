@@ -50,17 +50,17 @@ public class FirstBehaviour : MonoBehaviour, IStrategy
         if (Input.GetMouseButton(0))
         {
 
-
+            
             ObjectPool.Instance.startClose.SetActive(false);
 
 
-            if (Input.mousePosition.x < 1080 / 4f && Input.mousePosition.x >= 0)
+            if (Input.mousePosition.x < Screen.width / 4f && Input.mousePosition.x >= 0)
             {
                 //AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
                 //float playbackTime = currentState.normalizedTime;
                 //animator.CrossFadeInFixedTime("Armature|Bend_Stick",playbackTime);
-                float amount = 1080 - Input.mousePosition.x;
+                float amount = Screen.width - Input.mousePosition.x;
                 animator.SetFloat("Speed", (amount + Input.mousePosition.x) / 1080f);
 
                 //animator.Play(0);
@@ -68,14 +68,14 @@ public class FirstBehaviour : MonoBehaviour, IStrategy
 
 
             }
-            else if (Input.mousePosition.x > 1080 / 4f && Input.mousePosition.x <= 1080f)
+            else if (Input.mousePosition.x > Screen.width / 4f && Input.mousePosition.x <= 1080f)
             {
                 //animator.CrossFadeInFixedTime("Armature|Bend_Stick", animator.playbackTime - amount);
                 //AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
                 //float playbackTime = currentState.normalizedTime;
                 //animator.CrossFadeInFixedTime("Armature|Bend_Stick", playbackTime -1f);
-                float amount = 1080 - Input.mousePosition.x;
+                float amount = Screen.width - Input.mousePosition.x;
 
                 animator.SetFloat("Speed", amount / 1080f);
 

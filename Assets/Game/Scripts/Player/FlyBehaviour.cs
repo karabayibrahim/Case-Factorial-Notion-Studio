@@ -10,25 +10,26 @@ public class FlyBehaviour : MonoBehaviour, IStrategy
     private float _lastFrameFingerPositionX;
     private float _moveFactorX;
     float swerveAmount;
-    Vector3 v3;
+    Vector2 lookUnput, screenCenter, mouseDistance;
     public float MoveFactorX => _moveFactorX;
     public void DoStrategy()
     {
-        //gameObject.transform.eulerAngles = new Vector3(90, 90, 90);
-        //gameObject.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
+       
         gameObject.transform.localRotation = Quaternion.Euler(90f, 90f, 90f);
-        gameObject.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 0, 0);
+        //gameObject.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 0, 0);
         anim = PlayerController.Instance.gameObject.transform.GetChild(0).transform.gameObject.GetComponent<Animator>();
         anim.SetTrigger("Fly");
         gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x, gameObject.GetComponent<Rigidbody>().velocity.y*0.5f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.8f);
         Physics.gravity = new Vector3(0, -2f, 0);
 
-        //Camera.main.gameObject.GetComponent<CamFollow>().enabled = true;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        screenCenter.x = Screen.width * .5f;
+        screenCenter.y = Screen.height * .5f;
         swerveAmount = 0;
 
     }
@@ -51,52 +52,57 @@ public class FlyBehaviour : MonoBehaviour, IStrategy
     }
     void ControllerMove()
     {
+
+
         if (swerveAmount != 0 && swerveAmount < 1f)
         {
+            PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.x + (MoveFactorX * Time.deltaTime * 50f), PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.y - 0.01f, PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.z - 0.01f);
+
             //v3 = new Vector3(PlayerController.Instance.transform.localRotation.eulerAngles.x + (swerveAmount * 5f), 90f, 90f);
-            PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.x + (swerveAmount * 20f), PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.y - 0.01f, PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.z);
             //gameObject.transform.eulerAngles = v3;
-            var rotation = Quaternion.Euler(90 + (swerveAmount * 2000f), 90f + (swerveAmount * 2000f), 90f);
-            gameObject.transform.localRotation = Quaternion.Slerp(gameObject.transform.localRotation, rotation, Time.deltaTime*2f);
+            //gameObject.transform.localRotation = Quaternion.Lerp(gameObject.transform.localRotation, Quaternion.Euler((90f + MoveFactorX*10f), gameObject.transform.rotation.y, gameObject.transform.rotation.z), 0.1f);
+
+            //var rotation = Quaternion.Euler(-(MoveFactorX * 20f), 90, 90f);
+            //gameObject.transform.localRotation = Quaternion.Slerp(gameObject.transform.localRotation, rotation, Time.deltaTime*2f);
             //gameObject.transform.GetChild(0).localRotation = Quaternion.Slerp(gameObject.transform.GetChild(0).localRotation, rotation, Time.deltaTime * 2f);
-            
+            transform.Rotate(0, -MoveFactorX * Time.deltaTime * 20f, -MoveFactorX * Time.deltaTime * 20f, Space.Self);
+
+            //lookUnput.x = Input.mousePosition.x;
+            //lookUnput.y = Input.mousePosition.y;
+            //mouseDistance.x = (lookUnput.x - screenCenter.x) / screenCenter.x;
+            //mouseDistance.y = (lookUnput.y - screenCenter.y) / screenCenter.y;
+            //mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
+            //transform.Rotate(0, -mouseDistance.x * 500f * Time.deltaTime, 0, Space.Self);
 
 
 
         }
 
-        //if (Input.mousePosition.x < 1080 / 2f && Input.mousePosition.x >= 0)
-        //{
 
-
-
-        //}
-        //else if (Input.mousePosition.x > 1080 / 2f && Input.mousePosition.x <= 1080f)
-        //{
-        //    PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.x + swerveAmount * 5f, PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.y - 0.01f, PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity.z);
-
-
-
-
-
-
-
-
-
-
-        //}
 
     }
     void MovementInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             _lastFrameFingerPositionX = Input.mousePosition.x;
         }
         else if (Input.GetMouseButton(0))
         {
-            _moveFactorX = Input.mousePosition.x - _lastFrameFingerPositionX;
-            _lastFrameFingerPositionX = Input.mousePosition.x;
+            
+            if (Input.mousePosition.x<=Screen.width&&Input.mousePosition.x>=0)
+            {
+                
+                _moveFactorX = Input.mousePosition.x - _lastFrameFingerPositionX;
+                _lastFrameFingerPositionX = Input.mousePosition.x;
+                Debug.Log(_moveFactorX);
+            }
+            else
+            {
+                _moveFactorX = 0;
+            }
+            
         }
         else if (Input.GetMouseButtonUp(0))
         {
